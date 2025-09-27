@@ -23,6 +23,14 @@ class SoundButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: isPlaying ? Colors.green : null,
+        padding: const EdgeInsets.all(14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.outlineVariant,
+          ),
+        ),
+        elevation: isPlaying ? 2 : 1,
       ),
       onPressed: () async {
         try {

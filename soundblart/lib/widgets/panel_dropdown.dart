@@ -19,14 +19,19 @@ class PanelDropdown extends StatelessWidget {
         const Text('Panel:'),
         const SizedBox(width: 12),
         Expanded(
-          child: DropdownButton<String>(
+          child: DropdownButtonFormField<String>(
             value: selectedPanel,
             isExpanded: true,
-            hint: const Text('Select a panel'),
+            decoration: const InputDecoration(
+              hintText: 'Select a panel',
+              isDense: true,
+            ),
             items: panelNames
                 .map(
-                  (name) =>
-                      DropdownMenuItem<String>(value: name, child: Text(name)),
+                  (name) => DropdownMenuItem<String>(
+                    value: name,
+                    child: Text(name),
+                  ),
                 )
                 .toList(),
             onChanged: onChanged,

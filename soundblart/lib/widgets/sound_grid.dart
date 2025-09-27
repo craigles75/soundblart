@@ -48,10 +48,13 @@ class _EmptySlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AbsorbPointer(
+    final color = Theme.of(context).brightness == Brightness.dark
+        ? const Color(0xFF2A2A2A)
+        : const Color(0xFFE0E0E0);
+    return AbsorbPointer(
       child: DecoratedBox(
-        decoration: BoxDecoration(color: Color(0xFFE0E0E0)),
-        child: SizedBox.expand(),
+        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(12)),
+        child: const SizedBox.expand(),
       ),
     );
   }
