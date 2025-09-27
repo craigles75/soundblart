@@ -25,10 +25,8 @@ class PanelDropdown extends StatelessWidget {
             hint: const Text('Select a panel'),
             items: panelNames
                 .map(
-                  (name) => DropdownMenuItem<String>(
-                    value: name,
-                    child: Text(name),
-                  ),
+                  (name) =>
+                      DropdownMenuItem<String>(value: name, child: Text(name)),
                 )
                 .toList(),
             onChanged: onChanged,
@@ -38,5 +36,3 @@ class PanelDropdown extends StatelessWidget {
     );
   }
 }
-
-

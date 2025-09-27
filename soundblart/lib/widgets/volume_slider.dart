@@ -4,11 +4,7 @@ class VolumeSlider extends StatelessWidget {
   final double value;
   final ValueChanged<double> onChanged;
 
-  const VolumeSlider({
-    super.key,
-    required this.value,
-    required this.onChanged,
-  });
+  const VolumeSlider({super.key, required this.value, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +15,7 @@ class VolumeSlider extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: Slider(
-                value: value,
-                onChanged: onChanged,
-              ),
+              child: Slider(value: value, onChanged: onChanged),
             ),
             SizedBox(width: 48, child: Text('${(value * 100).round()}%')),
           ],
@@ -31,5 +24,3 @@ class VolumeSlider extends StatelessWidget {
     );
   }
 }
-
-

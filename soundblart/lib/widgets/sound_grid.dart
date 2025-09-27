@@ -56,5 +56,3 @@ class _EmptySlot extends StatelessWidget {
     );
   }
 }
-
-

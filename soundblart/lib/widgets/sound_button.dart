@@ -38,9 +38,9 @@ class SoundButton extends StatelessWidget {
           onStateChanged();
         } catch (e) {
           if (!context.mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Playback error: $e')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Playback error: $e')));
         }
       },
       child: Text(
@@ -52,5 +52,3 @@ class SoundButton extends StatelessWidget {
     );
   }
 }
-
-
