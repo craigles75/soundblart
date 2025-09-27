@@ -1,0 +1,47 @@
+# OS
+.DS_Store
+
+# IDE/Editor
+.idea/
+.vscode/
+*.iml
+
+# Flutter/Dart/Pub
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Android
+android/.gradle/
+android/local.properties
+android/**/captures/
+android/**/GeneratedPluginRegistrant.*
+android/key.properties
+
+# iOS
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/.generated/
+ios/Pods/
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+ios/Runner.xcworkspace/xcuserdata/
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+macos/Runner.xcworkspace/xcuserdata/
+
+# Windows
+windows/flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+
