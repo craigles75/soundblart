@@ -1,9 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../models/sound.dart';
 import '../services/audio_manager.dart';
 import '../services/sound_loader.dart';
+import '../widgets/panel_dropdown.dart';
+import '../widgets/sound_grid.dart';
+import '../widgets/volume_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<String> panelNames = _panels.keys.toList();
-    final List<Sound> sounds = _selectedPanel != null ? (_panels[_selectedPanel] ?? []) : [];
+    final List<Sound> sounds = _selectedPanel != null
+        ? (_panels[_selectedPanel] ?? [])
+        : [];
 
     return Scaffold(
       appBar: AppBar(
@@ -56,9 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () async {
               await _init();
               if (!mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Reloaded panels')),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Reloaded panels')));
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -71,34 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             _buildDiagnostics(panelNames),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                const Text('Panel:'),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: _selectedPanel,
-                    isExpanded: true,
-                    hint: const Text('Select a panel'),
-                    items: panelNames
-                        .map((name) => DropdownMenuItem<String>(
-                              value: name,
-                              child: Text(name),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedPanel = value;
-                      });
-                    },
-                  ),
-                ),
-              ],
+            PanelDropdown(
+              panelNames: panelNames,
+              selectedPanel: _selectedPanel,
+              onChanged: (value) {
+                setState(() {
+                  _selectedPanel = value;
+                });
+              },
             ),
             const SizedBox(height: 16),
             Expanded(child: _buildMainArea(sounds)),
             const SizedBox(height: 16),
-            _buildVolumeSlider(),
+            VolumeSlider(
+              value: _volume,
+              onChanged: (v) async {
+                setState(() {
+                  _volume = v;
+                });
+                await _audio.setVolume(v);
+              },
+            ),
           ],
         ),
       ),
@@ -106,13 +103,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildDiagnostics(List<String> panelNames) {
-    final totalSounds = _panels.values.fold<int>(0, (sum, list) => sum + list.length);
+    final totalSounds = _panels.values.fold<int>(
+      0,
+      (sum, list) => sum + list.length,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Directory: $_rootPath', style: const TextStyle(fontSize: 12)),
         const SizedBox(height: 4),
-        Text('Panels: ${panelNames.length}, Sounds: $totalSounds', style: const TextStyle(fontSize: 12)),
+        Text(
+          'Panels: ${panelNames.length}, Sounds: $totalSounds',
+          style: const TextStyle(fontSize: 12),
+        ),
         if (!_rootExists || panelNames.isEmpty)
           const Padding(
             padding: EdgeInsets.only(top: 8.0),
@@ -134,107 +137,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-    return _buildSoundGrid(sounds);
-  }
-
-  Widget _buildVolumeSlider() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Master Volume'),
-        Row(
-          children: [
-            Expanded(
-              child: Slider(
-                value: _volume,
-                onChanged: (v) async {
-                  setState(() {
-                    _volume = v;
-                  });
-                  await _audio.setVolume(v);
-                },
-              ),
-            ),
-            SizedBox(
-              width: 48,
-              child: Text('${(_volume * 100).round()}%'),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSoundGrid(List<Sound> sounds) {
-    // Always show 3x3 grid, pad with empty slots if fewer than 9
-    const int gridSlots = 9;
-    final int itemCount = sounds.length < gridSlots ? gridSlots : sounds.length;
-
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1.0,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-      ),
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        if (index >= sounds.length) {
-          return const _EmptySlot();
-        }
-        final sound = sounds[index];
-        final bool isPlaying = _audio.currentPath == sound.filePath;
-        return ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: isPlaying ? Colors.green : null,
-          ),
-          onPressed: () async {
-            try {
-              final file = File(sound.filePath);
-              final exists = await file.exists();
-              if (!exists) {
-                if (!mounted) return;
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('File not found: ${sound.filePath}')),
-                );
-                return;
-              }
-
-              await _audio.playSound(sound.filePath);
-              if (!mounted) return;
-              setState(() {});
-            } catch (e) {
-              if (!mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Playback error: $e')),
-              );
-            }
-          },
-          child: Text(
-            sound.name,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+    return SoundGrid(
+      sounds: sounds,
+      audio: _audio,
+      onStateChanged: () {
+        if (!mounted) return;
+        setState(() {});
       },
     );
   }
 }
-
-class _EmptySlot extends StatelessWidget {
-  const _EmptySlot();
-
-  @override
-  Widget build(BuildContext context) {
-    return const AbsorbPointer(
-      child: DecoratedBox(
-        decoration: BoxDecoration(color: Color(0xFFE0E0E0)),
-        child: SizedBox.expand(),
-      ),
-    );
-  }
-}
-
-
-
