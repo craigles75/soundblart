@@ -49,11 +49,15 @@ class SoundButton extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text('Playback error: $e')));
         }
       },
-      child: Text(
-        sound.name,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
+      child: Tooltip(
+        message: sound.name,
+        waitDuration: const Duration(milliseconds: 600),
+        child: Text(
+          sound.name,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+        ),
       ),
     );
   }

@@ -51,31 +51,36 @@ class _HomeScreenState extends State<HomeScreen> {
           body: _state.isLoading
               ? const Center(child: CircularProgressIndicator())
               : Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildDiagnostics(panelNames),
-                const SizedBox(height: 12),
-                PanelDropdown(
-                  panelNames: panelNames,
-                  selectedPanel: _state.selectedPanel,
-                  onChanged: (value) {
-                    _state.selectPanel(value);
-                  },
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildDiagnostics(panelNames),
+                      const SizedBox(height: 12),
+                      PanelDropdown(
+                        panelNames: panelNames,
+                        selectedPanel: _state.selectedPanel,
+                        onChanged: (value) {
+                          _state.selectPanel(value);
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: _buildMainArea(sounds),
+                  ),
                 ),
-                const SizedBox(height: 16),
-                Expanded(child: _buildMainArea(sounds)),
-                const SizedBox(height: 16),
-                VolumeSlider(
-                  value: _state.volume,
-                  onChanged: (v) async {
-                    await _state.setVolume(v);
-                  },
+                      const SizedBox(height: 16),
+                      VolumeSlider(
+                        value: _state.volume,
+                        onChanged: (v) async {
+                          await _state.setVolume(v);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
         );
       },
     );
@@ -112,11 +117,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildMainArea(List<Sound> sounds) {
     if (_state.panels.isEmpty) {
-      return Center(
-        child: Text(
-          'No sounds found in:\n${_state.rootPath}\n\nCreate subfolders (e.g., Ambient, Bells) and add .wav files.',
-          textAlign: TextAlign.center,
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Text(
+              _state.errorMessage ?? 'No sounds found in:\n${_state.rootPath}\n\nCreate subfolders (e.g., Ambient, Bells) and add .wav files.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () {
+              _state.openRootFolder();
+            },
+            icon: const Icon(Icons.folder_open),
+            label: const Text('Open folder'),
+          ),
+        ],
       );
     }
     return SoundGrid(

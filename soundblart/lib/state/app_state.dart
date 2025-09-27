@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 import '../models/sound.dart';
@@ -16,6 +17,7 @@ class AppState extends ChangeNotifier {
   double _volume = 1.0;
   String _rootPath = '';
   bool _isLoading = false;
+  String? _errorMessage;
 
   Map<String, List<Sound>> get panels => _panels;
   String? get selectedPanel => _selectedPanel;
@@ -23,6 +25,7 @@ class AppState extends ChangeNotifier {
   String get rootPath => _rootPath;
   String? get currentPath => _audio.currentPath;
   bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   List<Sound> get currentPanelSounds {
     if (_selectedPanel == null) return const <Sound>[];
@@ -37,12 +40,28 @@ class AppState extends ChangeNotifier {
 
   Future<void> refresh() async {
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
-    final loaded = await _loader.loadPanels();
-    _panels = loaded;
-    _selectedPanel = loaded.keys.isNotEmpty ? loaded.keys.first : null;
-    _isLoading = false;
-    notifyListeners();
+    try {
+      final rootDir = Directory(_rootPath);
+      if (!await rootDir.exists()) {
+        _panels = {};
+        _selectedPanel = null;
+        _errorMessage = 'Directory not found: ' + _rootPath;
+      } else {
+        final loaded = await _loader.loadPanels(basePath: _rootPath);
+        _panels = loaded;
+        _selectedPanel = loaded.keys.isNotEmpty ? loaded.keys.first : null;
+        if (loaded.isEmpty) {
+          _errorMessage = 'No panels or .wav files found in ' + _rootPath;
+        }
+      }
+    } catch (e) {
+      _errorMessage = 'Error loading sounds: ' + e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   void selectPanel(String? name) {
@@ -64,5 +83,21 @@ class AppState extends ChangeNotifier {
   /// Manually trigger UI updates for listeners.
   void notify() {
     notifyListeners();
+  }
+
+  /// Opens the root soundbites folder in the OS file explorer.
+  Future<void> openRootFolder() async {
+    try {
+      if (_rootPath.isEmpty) return;
+      if (Platform.isMacOS) {
+        await Process.run('open', <String>[_rootPath]);
+      } else if (Platform.isWindows) {
+        await Process.run('explorer', <String>[_rootPath]);
+      } else if (Platform.isLinux) {
+        await Process.run('xdg-open', <String>[_rootPath]);
+      }
+    } catch (_) {
+      // No-op: best-effort
+    }
   }
 }
