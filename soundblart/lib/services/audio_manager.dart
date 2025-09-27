@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 
 /// Centralized audio control for the application.
@@ -10,6 +11,7 @@ class AudioManager {
   AudioManager._internal() {
     _player.onPlayerComplete.listen((_) {
       _currentPath = null;
+      _onCompleteController.add(null);
     });
   }
 
@@ -17,12 +19,16 @@ class AudioManager {
   static final AudioManager instance = AudioManager._internal();
 
   final AudioPlayer _player = AudioPlayer();
+  final StreamController<void> _onCompleteController = StreamController<void>.broadcast();
 
   String? _currentPath;
   double _volume = 1.0;
 
   /// The absolute path of the file currently playing (if any).
   String? get currentPath => _currentPath;
+
+  /// Stream that emits when playback completes.
+  Stream<void> get onComplete => _onCompleteController.stream;
 
   /// Master volume, clamped to [0.0, 1.0].
   double get volume => _volume;
@@ -61,7 +67,9 @@ class AudioManager {
   /// Release player resources when the app is shutting down.
   Future<void> dispose() async {
     await _player.dispose();
+    await _onCompleteController.close();
   }
 }
+
 
 

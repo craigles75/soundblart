@@ -48,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: Padding(
+          body: _state.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Directory: ${_state.rootPath}', style: const TextStyle(fontSize: 12)),
+        Text(
+          'Directory: ${_state.rootPath}',
+          style: const TextStyle(fontSize: 12),
+        ),
         const SizedBox(height: 4),
         Text(
           'Panels: ${panelNames.length}, Sounds: $totalSounds',

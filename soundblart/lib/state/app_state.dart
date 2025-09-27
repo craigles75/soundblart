@@ -15,12 +15,14 @@ class AppState extends ChangeNotifier {
   String? _selectedPanel;
   double _volume = 1.0;
   String _rootPath = '';
+  bool _isLoading = false;
 
   Map<String, List<Sound>> get panels => _panels;
   String? get selectedPanel => _selectedPanel;
   double get volume => _volume;
   String get rootPath => _rootPath;
   String? get currentPath => _audio.currentPath;
+  bool get isLoading => _isLoading;
 
   List<Sound> get currentPanelSounds {
     if (_selectedPanel == null) return const <Sound>[];
@@ -34,9 +36,12 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> refresh() async {
+    _isLoading = true;
+    notifyListeners();
     final loaded = await _loader.loadPanels();
     _panels = loaded;
     _selectedPanel = loaded.keys.isNotEmpty ? loaded.keys.first : null;
+    _isLoading = false;
     notifyListeners();
   }
 
@@ -61,5 +66,3 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-
