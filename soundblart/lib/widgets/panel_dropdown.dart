@@ -28,10 +28,8 @@ class PanelDropdown extends StatelessWidget {
             ),
             items: panelNames
                 .map(
-                  (name) => DropdownMenuItem<String>(
-                    value: name,
-                    child: Text(name),
-                  ),
+                  (name) =>
+                      DropdownMenuItem<String>(value: name, child: Text(name)),
                 )
                 .toList(),
             onChanged: onChanged,

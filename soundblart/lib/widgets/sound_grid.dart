@@ -53,7 +53,10 @@ class _EmptySlot extends StatelessWidget {
         : const Color(0xFFE0E0E0);
     return AbsorbPointer(
       child: DecoratedBox(
-        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(12)),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: const SizedBox.expand(),
       ),
     );
