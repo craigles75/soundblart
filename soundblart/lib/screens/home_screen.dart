@@ -65,12 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SizedBox(height: 16),
-                Expanded(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: _buildMainArea(sounds),
-                  ),
-                ),
+                      Expanded(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 200),
+                          child: _buildMainArea(sounds),
+                        ),
+                      ),
                       const SizedBox(height: 16),
                       VolumeSlider(
                         value: _state.volume,
@@ -123,7 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              _state.errorMessage ?? 'No sounds found in:\n${_state.rootPath}\n\nCreate subfolders (e.g., Ambient, Bells) and add .wav files.',
+              _state.errorMessage ??
+                  'No sounds found in:\n${_state.rootPath}\n\nCreate subfolders (e.g., Ambient, Bells) and add .wav files.',
               textAlign: TextAlign.center,
             ),
           ),

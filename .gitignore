@@ -29,6 +29,7 @@ ios/Flutter/Generated.xcconfig
 ios/Flutter/ephemeral/
 ios/.generated/
 ios/Pods/
+ios/Podfile.lock
 ios/Runner/GeneratedPluginRegistrant.*
 ios/Runner.xcodeproj/project.xcworkspace/xcuserdata/
 ios/Runner.xcworkspace/xcuserdata/
@@ -37,11 +38,15 @@ ios/Runner.xcworkspace/xcuserdata/
 macos/Flutter/ephemeral/
 macos/Runner.xcodeproj/project.xcworkspace/xcuserdata/
 macos/Runner.xcworkspace/xcuserdata/
+macos/Podfile.lock
 
 # Windows
 windows/flutter/ephemeral/
 
 # Linux
 linux/flutter/ephemeral/
+
+# Project assets to ignore
+sample_screen.png
 
 
