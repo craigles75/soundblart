@@ -6,6 +6,7 @@ import '../services/audio_manager.dart';
 import '../widgets/panel_dropdown.dart';
 import '../widgets/sound_grid.dart';
 import '../widgets/volume_slider.dart';
+import '../widgets/logo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final sounds = _state.currentPanelSounds;
         return Scaffold(
           appBar: AppBar(
-            title: const Text('SoundBlart'),
+            title: const Logo(),
             centerTitle: true,
             actions: [
               IconButton(
