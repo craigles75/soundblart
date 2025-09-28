@@ -8,18 +8,25 @@ import 'package:audioplayers/audioplayers.dart';
 /// - Tracks the currently playing file path
 /// - Exposes a master volume in the range [0.0, 1.0]
 class AudioManager {
-  AudioManager._internal() {
-    _player.onPlayerComplete.listen((_) {
-      _currentPath = null;
-      _onCompleteController.add(null);
-    });
-  }
+  AudioManager._internal();
 
   /// Singleton instance to be used app-wide.
   static final AudioManager instance = AudioManager._internal();
 
-  final AudioPlayer _player = AudioPlayer();
-  final StreamController<void> _onCompleteController = StreamController<void>.broadcast();
+  AudioPlayer? _player;
+  final StreamController<void> _onCompleteController =
+      StreamController<void>.broadcast();
+  AudioPlayer _getPlayer() {
+    final existing = _player;
+    if (existing != null) return existing;
+    final created = AudioPlayer();
+    created.onPlayerComplete.listen((_) {
+      _currentPath = null;
+      _onCompleteController.add(null);
+    });
+    _player = created;
+    return created;
+  }
 
   String? _currentPath;
   double _volume = 1.0;
@@ -37,12 +44,12 @@ class AudioManager {
   Future<void> setVolume(double value) async {
     final double clamped = value.clamp(0.0, 1.0);
     _volume = clamped;
-    await _player.setVolume(_volume);
+    await _getPlayer().setVolume(_volume);
   }
 
   /// Stops any currently playing sound and clears the current path.
   Future<void> stopSound() async {
-    await _player.stop();
+    await _getPlayer().stop();
     _currentPath = null;
   }
 
@@ -57,19 +64,21 @@ class AudioManager {
     }
 
     // Stop whatever is currently playing
-    await _player.stop();
+    await _getPlayer().stop();
 
     _currentPath = path;
-    await _player.setVolume(_volume);
-    await _player.play(DeviceFileSource(path));
+    final player = _getPlayer();
+    await player.setVolume(_volume);
+    await player.play(DeviceFileSource(path));
   }
 
   /// Release player resources when the app is shutting down.
   Future<void> dispose() async {
-    await _player.dispose();
+    final p = _player;
+    if (p != null) {
+      await p.dispose();
+      _player = null;
+    }
     await _onCompleteController.close();
   }
 }
-
-
-

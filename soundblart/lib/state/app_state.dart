@@ -100,4 +100,10 @@ class AppState extends ChangeNotifier {
       // No-op: best-effort
     }
   }
+
+  /// Set root path (used by tests) and refresh.
+  Future<void> setRootPathAndRefresh(String path) async {
+    _rootPath = path;
+    await refresh();
+  }
 }
