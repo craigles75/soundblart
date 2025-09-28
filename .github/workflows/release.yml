@@ -1,0 +1,83 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    name: macOS build
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable macOS
+        run: flutter config --enable-macos-desktop
+        working-directory: soundblart
+
+      - name: Flutter pub get
+        run: flutter pub get
+        working-directory: soundblart
+
+      - name: Build macOS release
+        run: flutter build macos --release
+        working-directory: soundblart
+
+      - name: Zip app bundle
+        run: |
+          cd soundblart/build/macos/Build/Products/Release
+          zip -r SoundBlart-macOS.zip soundblart.app
+
+      - name: Upload asset to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: soundblart/build/macos/Build/Products/Release/SoundBlart-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-windows:
+    name: Windows build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable Windows
+        shell: bash
+        run: flutter config --enable-windows-desktop
+        working-directory: soundblart
+
+      - name: Flutter pub get
+        shell: bash
+        run: flutter pub get
+        working-directory: soundblart
+
+      - name: Build Windows release
+        shell: bash
+        run: flutter build windows --release
+        working-directory: soundblart
+
+      - name: Zip runner
+        shell: bash
+        run: |
+          cd soundblart/build/windows/x64/runner/Release
+          powershell -Command "Compress-Archive -Path * -DestinationPath SoundBlart-Windows.zip"
+
+      - name: Upload asset to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: soundblart/build/windows/x64/runner/Release/SoundBlart-Windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
