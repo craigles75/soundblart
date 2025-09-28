@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SoundBlart</title>
+    <link rel="icon" type="image/png" href="../soundblart/web/icons/Icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="SoundBlart - Desktop soundboard for macOS and Windows" />
+  </head>
+  <body>
+    <header class="container header">
+      <div class="brand">
+        <img src="../soundblart/web/icons/Icon-192.png" alt="SoundBlart" class="logo" />
+        <h1>SoundBlart</h1>
+      </div>
+      <p class="tagline">A clean, simple soundboard for your virtual meetings.</p>
+      <div class="cta">
+        <a class="btn primary" id="dl-macos" href="https://github.com/craigles75/soundblart/releases/latest/download/SoundBlart-macOS.zip">Download for macOS</a>
+        <a class="btn" id="dl-windows" href="https://github.com/craigles75/soundblart/releases/latest/download/SoundBlart-Windows.zip">Download for Windows</a>
+      </div>
+      <p class="hint">
+        Downloads are served via GitHub Releases. After publishing, upload
+        <code>SoundBlart-macOS.zip</code> or <code>SoundBlart-Windows.zip</code> assets to the latest release.
+      </p>
+    </header>
+
+    <main class="container features">
+      <section class="card">
+        <h2>Simple 3×3 Grid</h2>
+        <p>Trigger sounds instantly with a tidy 3×3 layout. Scroll when you have more than nine sounds.</p>
+      </section>
+      <section class="card">
+        <h2>Folder‑Based Panels</h2>
+        <p>Organize your sounds into folders on disk. SoundBlart discovers them at startup.</p>
+      </section>
+      <section class="card">
+        <h2>One Sound at a Time</h2>
+        <p>Click to play. Click again to stop. Starting a new sound stops the current one.</p>
+      </section>
+      <section class="card">
+        <h2>Master Volume</h2>
+        <p>Adjust a single volume slider that applies to all sounds.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>© <span id="year"></span> SoundBlart</p>
+        <p class="small">macOS and Windows builds generated with Flutter.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+
+
