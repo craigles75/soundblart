@@ -18,7 +18,7 @@ class SoundGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const int gridSlots = 9;
+    const int gridSlots = 6;
     final int itemCount = sounds.length < gridSlots ? gridSlots : sounds.length;
 
     return GridView.builder(

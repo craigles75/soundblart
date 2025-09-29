@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../models/sound.dart';
 import '../services/audio_manager.dart';
 import '../services/sound_loader.dart';
+import '../services/preset_installer.dart';
 
 /// Central application state for panels, selection, volume, and playback.
 class AppState extends ChangeNotifier {
@@ -16,6 +17,7 @@ class AppState extends ChangeNotifier {
   String? _selectedPanel;
   double _volume = 1.0;
   String _rootPath = '';
+  final List<String> _extraRoots = <String>[];
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -23,6 +25,7 @@ class AppState extends ChangeNotifier {
   String? get selectedPanel => _selectedPanel;
   double get volume => _volume;
   String get rootPath => _rootPath;
+  List<String> get extraRoots => List.unmodifiable(_extraRoots);
   String? get currentPath => _audio.currentPath;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
@@ -34,7 +37,7 @@ class AppState extends ChangeNotifier {
 
   Future<void> init() async {
     _volume = _audio.volume;
-    _rootPath = SoundLoader.defaultBasePath();
+    _rootPath = await PresetInstaller.ensureInstalled() ?? SoundLoader.defaultBasePath();
     await refresh();
   }
 
@@ -49,7 +52,8 @@ class AppState extends ChangeNotifier {
         _selectedPanel = null;
         _errorMessage = 'Directory not found: ' + _rootPath;
       } else {
-        final loaded = await _loader.loadPanels(basePath: _rootPath);
+        final roots = <String>[_rootPath, ..._extraRoots];
+        final loaded = await _loader.loadPanels(roots: roots);
         _panels = loaded;
         _selectedPanel = loaded.keys.isNotEmpty ? loaded.keys.first : null;
         if (loaded.isEmpty) {
@@ -104,6 +108,12 @@ class AppState extends ChangeNotifier {
   /// Set root path (used by tests) and refresh.
   Future<void> setRootPathAndRefresh(String path) async {
     _rootPath = path;
+    await refresh();
+  }
+
+  /// Add an additional sounds root directory and refresh.
+  Future<void> addExtraRoot(String path) async {
+    _extraRoots.add(path);
     await refresh();
   }
 }

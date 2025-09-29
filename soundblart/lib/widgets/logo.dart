@@ -22,5 +22,3 @@ class Logo extends StatelessWidget {
     );
   }
 }
-
-

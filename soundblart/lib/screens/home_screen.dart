@@ -7,6 +7,7 @@ import '../widgets/panel_dropdown.dart';
 import '../widgets/sound_grid.dart';
 import '../widgets/volume_slider.dart';
 import '../widgets/logo.dart';
+import 'package:file_selector/file_selector.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,6 +47,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
                 icon: const Icon(Icons.refresh),
+              ),
+              IconButton(
+                tooltip: 'Add folder',
+                onPressed: () async {
+                  final String? directoryPath = await getDirectoryPath();
+                  if (directoryPath != null) {
+                    await _state.addExtraRoot(directoryPath);
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Added folder: $directoryPath')),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.folder_special),
               ),
             ],
           ),

@@ -30,30 +30,28 @@ class SoundLoader {
 
   /// Returns a map of panel name to list of [Sound] loaded from disk.
   ///
-  /// [basePath] can override the default soundbites root. If omitted, we use
-  /// `~/Code/soundblart/soundbites`.
-  Future<Map<String, List<Sound>>> loadPanels({String? basePath}) async {
-    final rootPath = expandHome(basePath ?? defaultBasePath());
-    final rootDir = Directory(rootPath);
-
-    if (!await rootDir.exists()) {
-      return <String, List<Sound>>{}; // Gracefully return empty when missing
-    }
+  /// [basePath] can override the default soundbites root OR provide a list of
+  /// roots to merge.
+  Future<Map<String, List<Sound>>> loadPanels({String? basePath, List<String>? roots}) async {
+    final List<String> rootPaths = roots != null && roots.isNotEmpty
+        ? roots.map(expandHome).toList()
+        : [expandHome(basePath ?? defaultBasePath())];
 
     final Map<String, List<Sound>> panels = {};
 
-    // List subdirectories (each subdirectory is a panel)
-    final List<FileSystemEntity> entries = await rootDir.list().toList();
-    for (final entity in entries) {
-      if (entity is! Directory) continue;
-      final String panelName = p.basename(entity.path);
-      if (panelName.startsWith('.')) continue; // skip hidden dirs
-
-      final List<Sound> sounds = await _loadWavFiles(entity);
-
-      // Only include panels that have at least one sound
-      if (sounds.isNotEmpty) {
-        panels[panelName] = sounds;
+    for (final rootPath in rootPaths) {
+      final rootDir = Directory(rootPath);
+      if (!await rootDir.exists()) {
+        continue;
+      }
+      final List<FileSystemEntity> entries = await rootDir.list().toList();
+      for (final entity in entries) {
+        if (entity is! Directory) continue;
+        final String panelName = p.basename(entity.path);
+        if (panelName.startsWith('.')) continue;
+        final List<Sound> sounds = await _loadWavFiles(entity);
+        if (sounds.isEmpty) continue;
+        panels.update(panelName, (existing) => [...existing, ...sounds], ifAbsent: () => sounds);
       }
     }
 
