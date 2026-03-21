@@ -1,4 +1,4 @@
-use kira::sound::static_sound::{StaticSoundData, StaticSoundSettings};
+use kira::sound::static_sound::StaticSoundData;
 use std::path::Path;
 
 use crate::error::AppError;
@@ -22,7 +22,7 @@ impl AudioLoader {
             });
         }
 
-        StaticSoundData::from_file(p, StaticSoundSettings::default())
+        StaticSoundData::from_file(p)
             .map_err(|e| AppError::Audio(format!("Failed to decode {}: {}", path, e)))
     }
 }

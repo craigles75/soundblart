@@ -115,9 +115,7 @@ impl AudioState {
             .map_err(|e| AppError::Audio(format!("Playback failed: {e}")))?;
 
         // Apply current volume
-        handle
-            .set_volume(Volume::Amplitude(self.volume as f64), Tween::default())
-            .map_err(|e| AppError::Audio(format!("Volume set failed: {e}")))?;
+        handle.set_volume(Volume::Amplitude(self.volume as f64), Tween::default());
 
         self.current_handle = Some(handle);
         self.current_path = Some(path.to_string());
@@ -143,12 +141,7 @@ impl AudioState {
 
         // Apply to currently playing sound if any
         if let Some(ref mut handle) = self.current_handle {
-            handle
-                .set_volume(
-                    Volume::Amplitude(self.volume as f64),
-                    Tween::default(),
-                )
-                .map_err(|e| AppError::Audio(format!("Volume set failed: {e}")))?;
+            handle.set_volume(Volume::Amplitude(self.volume as f64), Tween::default());
         }
 
         Ok(())
@@ -172,9 +165,7 @@ impl AudioState {
             .play(data)
             .map_err(|e| AppError::Audio(format!("Preview playback failed: {e}")))?;
 
-        handle
-            .set_volume(Volume::Amplitude(self.volume as f64), Tween::default())
-            .map_err(|e| AppError::Audio(format!("Preview volume set failed: {e}")))?;
+        handle.set_volume(Volume::Amplitude(self.volume as f64), Tween::default());
 
         self.preview_handle = Some(handle);
         Ok(())

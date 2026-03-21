@@ -8,6 +8,8 @@ pub mod types;
 
 use std::sync::{Mutex, RwLock};
 
+use tauri::Manager;
+
 use commands::{audio as audio_cmd, dialog as dialog_cmd, library as library_cmd, AppStateDeps};
 
 /// Entry point called by `main.rs`. Builds and runs the Tauri application.

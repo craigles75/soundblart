@@ -1,7 +1,7 @@
 use tauri::{AppHandle, Emitter, State};
 
 use crate::config::store::ConfigStore;
-use crate::error::{AppError, CommandResult};
+use crate::error::CommandResult;
 use crate::library::validator;
 use crate::types::Session;
 

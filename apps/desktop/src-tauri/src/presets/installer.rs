@@ -34,26 +34,19 @@ impl PresetInstaller {
             return Ok(presets_dir);
         }
 
-        // Resolve the bundled sounds directory relative to the resource path.
-        // In dev mode this is src-tauri/sounds/; in release it's bundled via tauri.conf.json.
-        let resource_dir = app
-            .path()
-            .resource_dir()
-            .map_err(|e| AppError::Config(format!("Cannot resolve resource dir: {e}")))?;
+        // Resolve the bundled sounds directory.
+        // Try multiple locations: resource dir (release), then src-tauri/sounds/ (dev).
+        let bundled_sounds = Self::find_bundled_sounds(app);
 
-        let bundled_sounds = resource_dir.join("sounds");
-
-        if !bundled_sounds.is_dir() {
-            // No bundled sounds to install — this is fine for dev builds without sounds
-            log::warn!(
-                "No bundled sounds directory at {}; skipping preset install",
-                bundled_sounds.display()
-            );
-            // Still create the presets dir and sentinel so we don't retry
-            fs::create_dir_all(&presets_dir)?;
-            fs::write(&sentinel_path, "no bundled sounds")?;
-            return Ok(presets_dir);
-        }
+        let bundled_sounds = match bundled_sounds {
+            Some(dir) => dir,
+            None => {
+                log::warn!("No bundled sounds directory found; skipping preset install");
+                fs::create_dir_all(&presets_dir)?;
+                fs::write(&sentinel_path, "no bundled sounds")?;
+                return Ok(presets_dir);
+            }
+        };
 
         // Create the presets directory
         fs::create_dir_all(&presets_dir)?;
@@ -76,6 +69,40 @@ impl PresetInstaller {
             .map_err(|e| AppError::Config(format!("Cannot resolve app data dir: {e}")))?;
 
         Ok(app_support.join("presets"))
+    }
+
+    /// Search for bundled sounds in multiple locations.
+    /// Release builds: resource_dir/sounds/
+    /// Dev builds: src-tauri/sounds/ (relative to CARGO_MANIFEST_DIR)
+    fn find_bundled_sounds(app: &AppHandle) -> Option<PathBuf> {
+        // 1. Try resource dir (works in release builds)
+        if let Ok(resource_dir) = app.path().resource_dir() {
+            let candidate = resource_dir.join("sounds");
+            if candidate.is_dir() && Self::dir_has_wav_subdirs(&candidate) {
+                return Some(candidate);
+            }
+        }
+
+        // 2. Try relative to CARGO_MANIFEST_DIR (dev builds)
+        let manifest_dir = env!("CARGO_MANIFEST_DIR");
+        let dev_sounds = Path::new(manifest_dir).join("sounds");
+        if dev_sounds.is_dir() && Self::dir_has_wav_subdirs(&dev_sounds) {
+            return Some(dev_sounds);
+        }
+
+        None
+    }
+
+    /// Check if a directory contains at least one subdirectory with .wav files.
+    fn dir_has_wav_subdirs(dir: &Path) -> bool {
+        fs::read_dir(dir)
+            .map(|entries| {
+                entries.filter_map(|e| e.ok()).any(|e| {
+                    e.file_type().map(|ft| ft.is_dir()).unwrap_or(false)
+                        && Self::dir_has_wav_files(&e.path())
+                })
+            })
+            .unwrap_or(false)
     }
 
     /// Recursively copy a directory, only including `.wav` files and subdirectories

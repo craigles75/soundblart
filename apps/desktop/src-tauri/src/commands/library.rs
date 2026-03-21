@@ -210,7 +210,7 @@ pub fn refresh_library(
 /// Also preloads all sounds into the audio cache.
 ///
 /// Lock ordering: config → library (write) → audio
-fn rebuild_library(app: &AppHandle, deps: &AppStateDeps) -> Result<LibraryStats, String> {
+fn rebuild_library(_app: &AppHandle, deps: &AppStateDeps) -> Result<LibraryStats, String> {
     let roots = {
         let config = deps.config.lock().unwrap();
         config.directory_paths.clone()

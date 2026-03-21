@@ -94,8 +94,8 @@ export const stopPreview = (): Promise<void> =>
 export const getPanels = (): Promise<Panel[]> =>
   invoke<Panel[]>('get_panels');
 
-export const setActivePanel = (panel_name: string): Promise<void> =>
-  invoke<void>('set_active_panel', { panel_name });
+export const setActivePanel = (panelName: string): Promise<void> =>
+  invoke<void>('set_active_panel', { panelName });
 
 export const getDirectories = (): Promise<DirectoryInfo[]> =>
   invoke<DirectoryInfo[]>('get_directories');
