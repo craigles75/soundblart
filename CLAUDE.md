@@ -81,3 +81,10 @@ Releases are triggered by pushing a `v*` tag. CI (`.github/workflows/release.yml
 ## Soundbites Directory
 
 Sound files live outside the Flutter project at `soundbites/` (repo root). Each subfolder is a panel. Only `.wav` files are loaded.
+
+## Active Technologies
+- Rust stable 1.77+ (backend); TypeScript/React 18 (frontend); Node.js 20+ + Tauri v2, kira 0.9.x, symphonia 0.5.x, cpal 0.15.x (via kira), tauri-plugin-store, tauri-plugin-dialog, React 18, Tailwind CSS v3, Vite 5, Astro 4 (001-native-desktop-rewrite)
+- JSON file via `tauri-plugin-store` at platform app config dir (macOS: `~/Library/Application Support/com.soundblart.app/`; Windows: `%APPDATA%\com.soundblart.app\`) (001-native-desktop-rewrite)
+
+## Recent Changes
+- 001-native-desktop-rewrite: Added Rust stable 1.77+ (backend); TypeScript/React 18 (frontend); Node.js 20+ + Tauri v2, kira 0.9.x, symphonia 0.5.x, cpal 0.15.x (via kira), tauri-plugin-store, tauri-plugin-dialog, React 18, Tailwind CSS v3, Vite 5, Astro 4

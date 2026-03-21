@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sonic Atelier - Folders &amp; Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#9f0519",
+              "surface-container": "#1a1a1a",
+              "surface-variant": "#262626",
+              "tertiary-fixed": "#70b5ff",
+              "on-tertiary-container": "#001429",
+              "on-primary-container": "#470e00",
+              "error": "#ff716c",
+              "tertiary-dim": "#3aa2ff",
+              "surface": "#0e0e0e",
+              "secondary-container": "#006e1c",
+              "surface-tint": "#ff8f6f",
+              "surface-bright": "#2c2c2c",
+              "on-tertiary-fixed": "#001930",
+              "on-secondary-container": "#e5ffde",
+              "on-primary-fixed-variant": "#581300",
+              "primary-fixed-dim": "#ff5d2b",
+              "on-error-container": "#ffa8a3",
+              "tertiary": "#44a5ff",
+              "on-background": "#ffffff",
+              "secondary-dim": "#83e881",
+              "on-primary-fixed": "#000000",
+              "primary-dim": "#ff734a",
+              "on-secondary-fixed": "#00480f",
+              "secondary-fixed-dim": "#83e881",
+              "outline-variant": "#484847",
+              "tertiary-fixed-dim": "#4ca8ff",
+              "on-surface-variant": "#adaaaa",
+              "primary-container": "#ff7851",
+              "primary-fixed": "#ff7851",
+              "surface-container-low": "#131313",
+              "on-tertiary-fixed-variant": "#003b67",
+              "inverse-primary": "#b12f00",
+              "primary": "#ff8f6f",
+              "inverse-surface": "#fcf9f8",
+              "tertiary-container": "#2498f5",
+              "surface-container-highest": "#262626",
+              "surface-container-lowest": "#000000",
+              "surface-container-high": "#20201f",
+              "on-secondary": "#005e17",
+              "on-error": "#490006",
+              "background": "#0e0e0e",
+              "on-secondary-fixed-variant": "#00691a",
+              "secondary": "#91f78e",
+              "surface-dim": "#0e0e0e",
+              "on-surface": "#ffffff",
+              "secondary-fixed": "#91f78e",
+              "inverse-on-surface": "#565555",
+              "on-primary": "#5c1400",
+              "error-dim": "#d7383b",
+              "on-tertiary": "#002442",
+              "outline": "#767575"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pad-inner-glow {
+            box-shadow: inset 2px 2px 8px rgba(255, 255, 255, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#0e0e0e] shadow-none">
+<div class="flex items-center justify-between px-6 py-4 w-full bg-[#131313]">
+<div class="flex items-center gap-4">
+<button class="text-[#ff8f6f] hover:bg-[#262626] transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-['Space_Grotesk'] font-bold text-[#ff8f6f] text-xl tracking-tight">Sonic Atelier</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-[#ff8f6f] hover:bg-[#262626] transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 pt-8">
+<!-- Header Section -->
+<div class="mb-10">
+<h2 class="font-headline text-4xl font-bold tracking-tight mb-2">Folders</h2>
+<p class="text-on-surface-variant font-body text-sm max-w-lg">Manage your active sound directories and library indexing paths.</p>
+</div>
+<!-- Global Actions Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<button class="group relative flex items-center justify-between bg-surface-container hover:bg-surface-variant p-6 rounded-lg transition-all active:scale-[0.98] duration-150 overflow-hidden">
+<div class="relative z-10 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">refresh</span>
+</div>
+<div class="text-left">
+<span class="block font-headline font-bold text-lg">Refresh Library</span>
+<span class="block text-on-surface-variant text-xs font-medium uppercase tracking-wider">Update 4,208 assets</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-primary transition-colors">chevron_right</span>
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<button class="group relative flex items-center justify-between bg-surface-container hover:bg-surface-variant p-6 rounded-lg transition-all active:scale-[0.98] duration-150 overflow-hidden">
+<div class="relative z-10 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-2xl">folder_shared</span>
+</div>
+<div class="text-left">
+<span class="block font-headline font-bold text-lg">Change Root Directory</span>
+<span class="block text-on-surface-variant text-xs font-medium uppercase tracking-wider">Set base lookup path</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/30 group-hover:text-tertiary transition-colors">chevron_right</span>
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+</div>
+<!-- Directory List -->
+<section class="space-y-4">
+<h3 class="font-label text-xs font-bold uppercase tracking-[0.2em] text-outline-variant px-2">Active Directories</h3>
+<div class="space-y-3">
+<!-- System Sounds -->
+<div class="bg-surface-container-low hover:bg-surface-container p-5 rounded-lg flex items-center gap-5 transition-colors group">
+<div class="flex-shrink-0 w-14 h-14 bg-surface-variant rounded-full flex items-center justify-center text-on-surface-variant pad-inner-glow">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline font-bold text-lg">System Sounds</span>
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">Read Only</span>
+</div>
+<p class="text-outline text-sm font-medium">/usr/share/sonic-atelier/core_samples</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-headline font-medium text-outline">1.2 GB</span>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-highest text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+<!-- Internal Storage -->
+<div class="bg-surface-container-low hover:bg-surface-container p-5 rounded-lg flex items-center gap-5 transition-colors group">
+<div class="flex-shrink-0 w-14 h-14 bg-surface-variant rounded-full flex items-center justify-center text-secondary pad-inner-glow">
+<span class="material-symbols-outlined">storage</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline font-bold text-lg">Internal Storage</span>
+<span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">Primary</span>
+</div>
+<p class="text-outline text-sm font-medium">/storage/emulated/0/Music/Atelier_Banks</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-headline font-medium text-outline">24.8 GB</span>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-highest text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+<!-- Custom Sounds -->
+<div class="bg-surface-container-low hover:bg-surface-container p-5 rounded-lg flex items-center gap-5 transition-colors group">
+<div class="flex-shrink-0 w-14 h-14 bg-surface-variant rounded-full flex items-center justify-center text-primary pad-inner-glow">
+<span class="material-symbols-outlined">create_new_folder</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline font-bold text-lg">Custom Sounds</span>
+</div>
+<p class="text-outline text-sm font-medium">/ext_sd/recorded_sessions/raw</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-headline font-medium text-outline">8.5 GB</span>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-error-container/20 text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Add New Button -->
+<button class="w-full border-2 border-dashed border-outline-variant/30 hover:border-primary/50 hover:bg-primary/5 p-6 rounded-lg flex flex-col items-center justify-center gap-2 transition-all group">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">add_circle</span>
+<span class="font-headline font-bold text-sm text-on-surface-variant group-hover:text-on-surface">Link New Directory</span>
+</button>
+</div>
+</section>
+<!-- Stats Grid (Secondary Content) -->
+<section class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="block text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Total Assets</span>
+<span class="block font-headline font-bold text-2xl text-on-surface">12,402</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="block text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Disk Usage</span>
+<span class="block font-headline font-bold text-2xl text-on-surface">34.5 GB</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="block text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Index State</span>
+<span class="block font-headline font-bold text-2xl text-secondary">Clean</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="block text-[10px] font-bold uppercase tracking-widest text-outline mb-1">Latency</span>
+<span class="block font-headline font-bold text-2xl text-on-surface">1.2ms</span>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-[2rem] bg-[#262626]/70 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+<div class="flex justify-around items-center h-20 px-8 w-full pb-safe">
+<div class="flex flex-col items-center justify-center text-[#484847] hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Studio</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#484847] hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">library_music</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Library</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#ff8f6f] bg-[#ff8f6f]/10 rounded-full px-4 py-2 active:scale-90 duration-150">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Folders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#484847] hover:text-white transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Settings</span>
+</div>
+</div>
+</nav>
+</body></html>

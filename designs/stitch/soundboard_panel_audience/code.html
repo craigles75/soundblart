@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=Plus+Jakarta+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#9f0519",
+              "surface-container": "#1a1a1a",
+              "surface-variant": "#262626",
+              "tertiary-fixed": "#70b5ff",
+              "on-tertiary-container": "#001429",
+              "on-primary-container": "#470e00",
+              "error": "#ff716c",
+              "tertiary-dim": "#3aa2ff",
+              "surface": "#0e0e0e",
+              "secondary-container": "#006e1c",
+              "surface-tint": "#ff8f6f",
+              "surface-bright": "#2c2c2c",
+              "on-tertiary-fixed": "#001930",
+              "on-secondary-container": "#e5ffde",
+              "on-primary-fixed-variant": "#581300",
+              "primary-fixed-dim": "#ff5d2b",
+              "on-error-container": "#ffa8a3",
+              "tertiary": "#44a5ff",
+              "on-background": "#ffffff",
+              "secondary-dim": "#83e881",
+              "on-primary-fixed": "#000000",
+              "primary-dim": "#ff734a",
+              "on-secondary-fixed": "#00480f",
+              "secondary-fixed-dim": "#83e881",
+              "outline-variant": "#484847",
+              "tertiary-fixed-dim": "#4ca8ff",
+              "on-surface-variant": "#adaaaa",
+              "primary-container": "#ff7851",
+              "primary-fixed": "#ff7851",
+              "surface-container-low": "#131313",
+              "on-tertiary-fixed-variant": "#003b67",
+              "inverse-primary": "#b12f00",
+              "primary": "#ff8f6f",
+              "inverse-surface": "#fcf9f8",
+              "tertiary-container": "#2498f5",
+              "surface-container-highest": "#262626",
+              "surface-container-lowest": "#000000",
+              "surface-container-high": "#20201f",
+              "on-secondary": "#005e17",
+              "on-error": "#490006",
+              "background": "#0e0e0e",
+              "on-secondary-fixed-variant": "#00691a",
+              "secondary": "#91f78e",
+              "surface-dim": "#0e0e0e",
+              "on-surface": "#ffffff",
+              "secondary-fixed": "#91f78e",
+              "inverse-on-surface": "#565555",
+              "on-primary": "#5c1400",
+              "error-dim": "#d7383b",
+              "on-tertiary": "#002442",
+              "outline": "#767575"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sound-pad {
+            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.1), 8px 8px 24px rgba(0, 0, 0, 0.4);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .sound-pad:active {
+            transform: scale(0.96);
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#0e0e0e] flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#ff8f6f] hover:bg-[#262626] transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-['Space_Grotesk'] font-bold text-[#ff8f6f] text-xl tracking-tight">Sonic Atelier</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="hidden md:flex gap-6 mr-8">
+<a class="text-[#ff8f6f] font-['Space_Grotesk'] font-medium" href="#">Studio</a>
+<a class="text-[#484847] font-['Space_Grotesk'] font-medium hover:text-[#ff8f6f] transition-colors" href="#">Library</a>
+<a class="text-[#484847] font-['Space_Grotesk'] font-medium hover:text-[#ff8f6f] transition-colors" href="#">Folders</a>
+</div>
+<button class="text-[#ff8f6f] hover:bg-[#262626] transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-6 py-8 md:py-12 max-w-6xl mb-24">
+<!-- Dashboard Header -->
+<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-on-surface-variant font-label text-[0.6875rem] uppercase tracking-[0.2em] mb-2 block">Live Session</span>
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter">Audience <span class="text-primary">Impact</span></h2>
+</div>
+<div class="flex gap-3">
+<div class="bg-surface-container-highest px-4 py-2 rounded-full flex items-center gap-2">
+<div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+<span class="text-sm font-medium">Live Output</span>
+</div>
+<button class="bg-surface-container-highest p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid / Soundboard -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+<!-- Pad 1: Clapping -->
+<button class="sound-pad group relative aspect-square md:aspect-auto md:h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-primary-container p-6 flex flex-col justify-between items-start text-left">
+<div class="w-full flex justify-between items-start">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" data-icon="clapping_hands">waving_hand</span>
+<span class="text-on-primary-fixed/40 font-mono text-xs">01</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-bold text-on-primary-fixed leading-none mb-1">Clapping</h3>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-primary-fixed/60">Stadium Crowd</p>
+</div>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+<!-- Pad 2: Cheering -->
+<button class="sound-pad group relative aspect-square md:aspect-auto md:h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-primary-container p-6 flex flex-col justify-between items-start text-left">
+<div class="w-full flex justify-between items-start">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" data-icon="celebration">celebration</span>
+<span class="text-on-primary-fixed/40 font-mono text-xs">02</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-bold text-on-primary-fixed leading-none mb-1">Cheering</h3>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-primary-fixed/60">High Energy</p>
+</div>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+<!-- Pad 3: Booing -->
+<button class="sound-pad group relative aspect-square md:aspect-auto md:h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-primary-container p-6 flex flex-col justify-between items-start text-left">
+<div class="w-full flex justify-between items-start">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" data-icon="thumb_down">thumb_down</span>
+<span class="text-on-primary-fixed/40 font-mono text-xs">03</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-bold text-on-primary-fixed leading-none mb-1">Booing</h3>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-primary-fixed/60">Mass Disapproval</p>
+</div>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+<!-- Pad 4: Laughter -->
+<button class="sound-pad group relative aspect-square md:aspect-auto md:h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-primary-container p-6 flex flex-col justify-between items-start text-left">
+<div class="w-full flex justify-between items-start">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" data-icon="sentiment_very_satisfied">sentiment_very_satisfied</span>
+<span class="text-on-primary-fixed/40 font-mono text-xs">04</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-bold text-on-primary-fixed leading-none mb-1">Laughter</h3>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-primary-fixed/60">Sitcom Mix</p>
+</div>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+<!-- Pad 5: Whistle -->
+<button class="sound-pad group relative aspect-square md:aspect-auto md:h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-primary-container p-6 flex flex-col justify-between items-start text-left">
+<div class="w-full flex justify-between items-start">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" data-icon="sports">sports</span>
+<span class="text-on-primary-fixed/40 font-mono text-xs">05</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-bold text-on-primary-fixed leading-none mb-1">Whistle</h3>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-primary-fixed/60">Sharp / Solo</p>
+</div>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+<!-- Pad 6: Gasp -->
+<button class="sound-pad group relative aspect-square md:aspect-auto md:h-64 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-primary-container p-6 flex flex-col justify-between items-start text-left">
+<div class="w-full flex justify-between items-start">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl" data-icon="tide">waves</span>
+<span class="text-on-primary-fixed/40 font-mono text-xs">06</span>
+</div>
+<div>
+<h3 class="font-headline text-2xl md:text-3xl font-bold text-on-primary-fixed leading-none mb-1">Gasp</h3>
+<p class="font-label text-[10px] uppercase tracking-widest text-on-primary-fixed/60">Collective Shock</p>
+</div>
+<div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="play_arrow">play_arrow</span>
+</div>
+</button>
+</div>
+<!-- Glassmorphism Mixer Section -->
+<section class="mt-16 bg-surface-container-low rounded-lg p-8 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1/2 h-full bg-primary/5 blur-[100px] pointer-events-none"></div>
+<div class="relative z-10 grid md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-2">
+<h4 class="font-headline text-2xl font-bold mb-4">Master Dynamics</h4>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between font-label text-[10px] uppercase tracking-widest text-on-surface-variant">
+<span>Output Gain</span>
+<span>-4.2 dB</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4 rounded-full"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label text-[10px] uppercase tracking-widest text-on-surface-variant">
+<span>Crowd Density</span>
+<span>82%</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[82%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col justify-end gap-4">
+<button class="bg-surface-container-highest hover:bg-surface-variant text-on-surface py-3 px-6 rounded-full font-label text-xs uppercase tracking-widest transition-all flex items-center justify-between">
+                        Reverb Profile
+                        <span class="material-symbols-outlined text-sm" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+<button class="bg-surface-container-highest hover:bg-surface-variant text-on-surface py-3 px-6 rounded-full font-label text-xs uppercase tracking-widest transition-all flex items-center justify-between">
+                        EQ Preset
+                        <span class="material-symbols-outlined text-sm" data-icon="tune">tune</span>
+</button>
+</div>
+<div class="bg-[#262626]/70 glass-panel rounded-lg p-6 flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="graphic_eq">graphic_eq</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Visualizer Active</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-[2rem] bg-[#262626]/70 backdrop-blur-xl flex justify-around items-center h-20 px-8 w-full pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-[#ff8f6f] bg-[#ff8f6f]/10 rounded-full px-4 py-2 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Studio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#484847] hover:text-white transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="library_music">library_music</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#484847] hover:text-white transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Folders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#484847] hover:text-white transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings_gear">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium uppercase tracking-widest mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

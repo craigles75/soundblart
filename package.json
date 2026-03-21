@@ -1,0 +1,21 @@
+{
+  "name": "soundblart-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @soundblart/desktop tauri dev",
+    "build:ui": "pnpm --filter @soundblart/ui build",
+    "build:desktop": "pnpm build:ui && pnpm --filter @soundblart/desktop tauri build",
+    "build:website": "pnpm build:ui && pnpm --filter @soundblart/website build",
+    "build": "pnpm build:ui && pnpm build:desktop && pnpm build:website",
+    "test:rust": "cd apps/desktop/src-tauri && cargo test",
+    "lint:rust": "cd apps/desktop/src-tauri && cargo clippy -- -D warnings",
+    "typecheck": "pnpm --filter @soundblart/desktop exec tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
