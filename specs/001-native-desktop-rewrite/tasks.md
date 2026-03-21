@@ -143,6 +143,42 @@
 
 ---
 
+## Phase 8: Release Readiness & Distribution
+
+**Purpose**: Everything needed to ship a signed, downloadable release and present a professional public face.
+
+### Code Signing & Notarization
+
+- [ ] T046 [devops] macOS code signing: enroll in Apple Developer Program ($99/year), generate Developer ID Application certificate, configure APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APPLE_ID, APPLE_TEAM_ID as GitHub Actions secrets, set signingIdentity in tauri.conf.json via env var, add notarytool notarization step to release workflow
+- [ ] T047 [devops] Windows code signing: acquire EV code signing certificate (or OV certificate), configure TAURI_SIGNING_PRIVATE_KEY and TAURI_SIGNING_PRIVATE_KEY_PASSWORD as GitHub Actions secrets, verify NSIS installer is signed in release workflow output
+
+### App Icons & Branding
+
+- [ ] T048 [ux] Design production app icon: 1024x1024 master PNG (Soundblart logo/wordmark on dark background matching #0e0e0e palette), export to all required sizes (32x32, 128x128, 128x128@2x, 256x256, 512x512) in apps/desktop/src-tauri/icons/
+- [ ] T049 [ux] Generate icon.icns (macOS) and icon.ico (Windows) from production master PNG — replace current placeholder solid-orange icons
+- [ ] T050 [ux] Create favicon.svg for the marketing website (apps/website/public/favicon.svg) — currently referenced in Base.astro but missing
+
+### Website Assets
+
+- [ ] T051 [ux] Create Open Graph image (1200x630) for social sharing — app screenshot or branded card, add to apps/website/public/og-image.png, wire og:image and twitter:image meta tags in Base.astro
+- [ ] T052 [ux] Capture app screenshots for marketing site hero section — Studio screen with sound pads active, Library screen with category cards — add to apps/website/public/screenshots/
+- [ ] T053 [web] Add screenshot section to landing page (apps/website/src/pages/index.astro) between Features and How It Works sections — responsive image grid with alt text
+
+### Domain & Hosting
+
+- [ ] T054 [devops] Register and configure custom domain (e.g. soundblart.com) — point DNS to Vercel, add domain in Vercel project settings, verify SSL certificate provisioning
+- [ ] T055 [devops] Add Vercel HTTP security headers via public/_headers or vercel.json headers config: X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+### Distribution & Metadata
+
+- [ ] T056 [devops] Create CHANGELOG.md at repo root — document v0.1.0 features (Studio, Library, Folders, Settings, preset sounds, cross-platform)
+- [ ] T057 [devops] Add robots.txt (apps/website/public/robots.txt) and @astrojs/sitemap integration for SEO
+- [ ] T058 [devops] Tag and publish v0.1.0 release — verify CI builds both platforms, uploads .dmg and .exe to GitHub release, website deploys successfully
+
+**Checkpoint**: Soundblart is publicly downloadable, signed, and discoverable.
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
