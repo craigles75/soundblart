@@ -25,11 +25,11 @@ pub fn run() {
         .setup(|app| {
             // Load persisted config (or defaults)
             let app_config =
-                config::store::ConfigStore::load(&app.handle()).unwrap_or_default();
+                config::store::ConfigStore::load(app.handle()).unwrap_or_default();
 
             // Install bundled presets on first run
             let preset_dir = match presets::installer::PresetInstaller::ensure_installed(
-                &app.handle(),
+                app.handle(),
             ) {
                 Ok(dir) => {
                     let dir_str = dir.to_string_lossy().to_string();
@@ -38,7 +38,7 @@ pub fn run() {
                     if !config.directory_paths.contains(&dir_str) {
                         config.directory_paths.insert(0, dir_str.clone());
                         let _ =
-                            crate::config::store::ConfigStore::save(&app.handle(), &config);
+                            crate::config::store::ConfigStore::save(app.handle(), &config);
                     }
                     Some(dir_str)
                 }
@@ -50,7 +50,7 @@ pub fn run() {
 
             // Re-load config after potential preset dir addition
             let app_config =
-                config::store::ConfigStore::load(&app.handle()).unwrap_or_default();
+                config::store::ConfigStore::load(app.handle()).unwrap_or_default();
 
             // Initialise audio engine (required — no fallback)
             let audio_state = audio::manager::AudioState::new()

@@ -69,9 +69,9 @@ impl From<AppError> for String {
 /// to propagate `AppError` through this type.
 ///
 /// # Example
-/// ```rust
+/// ```rust,ignore
 /// pub fn play_sound(path: String) -> CommandResult<()> {
-///     validate_sound_path(&path, &allowed_roots)?;  // AppError → String via Into
+///     validate_sound_path(&path, &allowed_roots)?;
 ///     audio_manager.play(path).map_err(Into::into)
 /// }
 /// ```

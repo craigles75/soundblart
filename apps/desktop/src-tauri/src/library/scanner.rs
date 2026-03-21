@@ -180,8 +180,7 @@ impl Scanner {
     /// Derive a display name from a directory or filename.
     /// Strips extension, replaces underscores/hyphens with spaces, capitalises each word.
     fn derive_display_name(raw: &str) -> String {
-        raw.replace('_', " ")
-            .replace('-', " ")
+        raw.replace(['_', '-'], " ")
             .split_whitespace()
             .map(|word| {
                 let mut chars = word.chars();
@@ -206,5 +205,121 @@ impl Scanner {
             .and_then(|s| s.to_str())
             .unwrap_or("Unknown");
         Self::derive_display_name(stem)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+    use std::io::Write;
+
+    fn create_wav(dir: &Path, name: &str) {
+        let path = dir.join(name);
+        let mut f = fs::File::create(path).unwrap();
+        f.write_all(&[0u8; 100]).unwrap();
+    }
+
+    #[test]
+    fn discovers_panels_from_subdirectories() {
+        let root = tempfile::tempdir().unwrap();
+        let panel_a = root.path().join("Ambient");
+        let panel_b = root.path().join("Crowd");
+        fs::create_dir_all(&panel_a).unwrap();
+        fs::create_dir_all(&panel_b).unwrap();
+
+        create_wav(&panel_a, "rain.wav");
+        create_wav(&panel_b, "applause.wav");
+        create_wav(&panel_b, "cheering.wav");
+
+        let panels = Scanner::scan_all(&[root.path().to_str().unwrap().to_string()]).unwrap();
+        assert_eq!(panels.len(), 2);
+
+        let ambient = panels.iter().find(|p| p.name == "Ambient").unwrap();
+        assert_eq!(ambient.sound_count, 1);
+
+        let crowd = panels.iter().find(|p| p.name == "Crowd").unwrap();
+        assert_eq!(crowd.sound_count, 2);
+    }
+
+    #[test]
+    fn skips_hidden_directories() {
+        let root = tempfile::tempdir().unwrap();
+        let visible = root.path().join("Bells");
+        let hidden = root.path().join(".hidden");
+        fs::create_dir_all(&visible).unwrap();
+        fs::create_dir_all(&hidden).unwrap();
+
+        create_wav(&visible, "ding.wav");
+        create_wav(&hidden, "secret.wav");
+
+        let panels = Scanner::scan_all(&[root.path().to_str().unwrap().to_string()]).unwrap();
+        assert_eq!(panels.len(), 1);
+        assert_eq!(panels[0].name, "Bells");
+    }
+
+    #[test]
+    fn excludes_empty_panels() {
+        let root = tempfile::tempdir().unwrap();
+        let with_wav = root.path().join("Good");
+        let empty = root.path().join("Empty");
+        let non_wav = root.path().join("TextOnly");
+        fs::create_dir_all(&with_wav).unwrap();
+        fs::create_dir_all(&empty).unwrap();
+        fs::create_dir_all(&non_wav).unwrap();
+
+        create_wav(&with_wav, "sound.wav");
+        // empty has no files
+        // non_wav has only .txt
+        fs::write(non_wav.join("readme.txt"), "not a sound").unwrap();
+
+        let panels = Scanner::scan_all(&[root.path().to_str().unwrap().to_string()]).unwrap();
+        assert_eq!(panels.len(), 1);
+        assert_eq!(panels[0].name, "Good");
+    }
+
+    #[test]
+    fn merges_panels_case_insensitively() {
+        let root_a = tempfile::tempdir().unwrap();
+        let root_b = tempfile::tempdir().unwrap();
+
+        let panel_a = root_a.path().join("Ambient");
+        let panel_b = root_b.path().join("ambient");
+        fs::create_dir_all(&panel_a).unwrap();
+        fs::create_dir_all(&panel_b).unwrap();
+
+        create_wav(&panel_a, "rain.wav");
+        create_wav(&panel_b, "wind.wav");
+
+        let panels = Scanner::scan_all(&[
+            root_a.path().to_str().unwrap().to_string(),
+            root_b.path().to_str().unwrap().to_string(),
+        ])
+        .unwrap();
+
+        assert_eq!(panels.len(), 1);
+        assert_eq!(panels[0].sound_count, 2);
+    }
+
+    #[test]
+    fn assigns_1_based_indices() {
+        let root = tempfile::tempdir().unwrap();
+        let panel = root.path().join("Test");
+        fs::create_dir_all(&panel).unwrap();
+
+        create_wav(&panel, "a.wav");
+        create_wav(&panel, "b.wav");
+        create_wav(&panel, "c.wav");
+
+        let panels = Scanner::scan_all(&[root.path().to_str().unwrap().to_string()]).unwrap();
+        let indices: Vec<u32> = panels[0].sounds.iter().map(|s| s.index).collect();
+        assert_eq!(indices, vec![1, 2, 3]);
+    }
+
+    #[test]
+    fn derive_display_name_works() {
+        assert_eq!(Scanner::derive_display_name("my_cool_sound"), "My Cool Sound");
+        assert_eq!(Scanner::derive_display_name("rain-forest"), "Rain Forest");
+        assert_eq!(Scanner::derive_display_name("Ambient"), "Ambient");
     }
 }

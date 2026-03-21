@@ -128,7 +128,7 @@ impl AudioState {
         if let Some(mut handle) = self.current_handle.take() {
             // Only send stop command if still playing
             if handle.state() == PlaybackState::Playing {
-                let _ = handle.stop(Tween::default());
+                handle.stop(Tween::default());
             }
         }
         self.current_path = None;
@@ -175,7 +175,7 @@ impl AudioState {
     pub fn stop_preview(&mut self) -> Result<(), AppError> {
         if let Some(mut handle) = self.preview_handle.take() {
             if handle.state() == PlaybackState::Playing {
-                let _ = handle.stop(Tween::default());
+                handle.stop(Tween::default());
             }
         }
         Ok(())

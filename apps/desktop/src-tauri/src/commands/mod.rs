@@ -19,7 +19,9 @@ use crate::types::{AppConfig, Session};
 ///
 /// When multiple locks must be held simultaneously:
 ///
-///     config → library → audio → session
+/// ```text
+/// config -> library -> audio -> session
+/// ```
 ///
 /// Never acquire a lock that precedes one you already hold. This prevents
 /// ABBA deadlocks. If you need to hold `audio` and then `config`, release
