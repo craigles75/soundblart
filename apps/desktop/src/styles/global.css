@@ -120,6 +120,11 @@
     }
   }
 
+  /* ─── Library row: preview playing state ──────────────────────────────────── */
+  .library-row-playing {
+    box-shadow: inset 0 0 8px rgba(255,143,111,0.18);
+  }
+
   /* ─── Sound pad: base neumorphic state (no inline styles for CSP compliance) ── */
   .sound-pad {
     box-shadow:

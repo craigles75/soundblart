@@ -13,7 +13,7 @@ export default function App() {
   return (
     <AppShell activeScreen={activeScreen} onNavigate={setActiveScreen}>
       {activeScreen === 'studio'   && <Studio />}
-      {activeScreen === 'library'  && <Library />}
+      {activeScreen === 'library'  && <Library onNavigate={setActiveScreen} />}
       {activeScreen === 'folders'  && <Folders />}
       {activeScreen === 'settings' && <Settings />}
     </AppShell>
