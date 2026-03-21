@@ -52,6 +52,9 @@ jobs:
       - name: Build UI package
         run: pnpm --filter @soundblart/ui build
 
+      - name: Copy bundled sounds for Tauri resources
+        run: cp -r soundbites apps/desktop/src-tauri/sounds
+
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
