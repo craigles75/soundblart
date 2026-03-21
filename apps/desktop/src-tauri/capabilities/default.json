@@ -1,0 +1,9 @@
+{
+  "identifier": "default",
+  "description": "Soundblart — minimum required capabilities (least-privilege). All file I/O is handled by Rust IPC commands — the JS frontend never calls the fs plugin directly.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:allow-open"
+  ]
+}

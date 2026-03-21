@@ -50,3 +50,33 @@ linux/flutter/ephemeral/
 sample_screen.png
 
 
+
+# pnpm / Node (Tauri rewrite)
+node_modules/
+.pnpm-store/
+*.log
+.env
+.env.*
+!.env.example
+
+# Rust / Tauri
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
+*.rs.bk
+*.rlib
+
+# Tauri build artifacts
+apps/desktop/src-tauri/WixTools/
+
+# Astro
+.astro/
+apps/website/.vercel/
+apps/website/.netlify/
+apps/website/dist/
+
+# Frontend dist
+apps/desktop/dist/
+packages/ui/dist/
+
+# Coverage
+coverage/

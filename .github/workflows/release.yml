@@ -9,78 +9,92 @@ permissions:
   contents: write
 
 jobs:
-  build-macos:
-    name: macOS build
-    runs-on: macos-latest
+  build-tauri:
+    name: Tauri Desktop (${{ matrix.platform }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos
+            runner: macos-14
+            target: universal-apple-darwin
+          - platform: windows
+            runner: windows-latest
+            target: x86_64-pc-windows-msvc
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          channel: stable
+          node-version: '20'
 
-      - name: Enable macOS
-        run: flutter config --enable-macos-desktop
-        working-directory: soundblart
-
-      - name: Flutter pub get
-        run: flutter pub get
-        working-directory: soundblart
-
-      - name: Build macOS release
-        run: flutter build macos --release
-        working-directory: soundblart
-
-      - name: Zip app bundle
-        run: |
-          cd soundblart/build/macos/Build/Products/Release
-          zip -r SoundBlart-macOS.zip soundblart.app
-
-      - name: Upload asset to release
-        uses: softprops/action-gh-release@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          files: soundblart/build/macos/Build/Products/Release/SoundBlart-macOS.zip
+          version: 10
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build UI package
+        run: pnpm --filter @soundblart/ui build
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: apps/desktop
+          tagName: ${{ github.ref_name }}
+          releaseName: Soundblart ${{ github.ref_name }}
+          releaseBody: 'See the [changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.'
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.platform == 'macos' && '--target universal-apple-darwin' || '' }}
 
-  build-windows:
-    name: Windows build
-    runs-on: windows-latest
+  build-website:
+    name: Website
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          channel: stable
+          node-version: '20'
 
-      - name: Enable Windows
-        shell: bash
-        run: flutter config --enable-windows-desktop
-        working-directory: soundblart
-
-      - name: Flutter pub get
-        shell: bash
-        run: flutter pub get
-        working-directory: soundblart
-
-      - name: Build Windows release
-        shell: bash
-        run: flutter build windows --release
-        working-directory: soundblart
-
-      - name: Zip runner
-        shell: bash
-        run: |
-          cd soundblart/build/windows/x64/runner/Release
-          powershell -Command "Compress-Archive -Path * -DestinationPath SoundBlart-Windows.zip"
-
-      - name: Upload asset to release
-        uses: softprops/action-gh-release@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          files: soundblart/build/windows/x64/runner/Release/SoundBlart-Windows.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build UI package
+        run: pnpm --filter @soundblart/ui build
+
+      - name: Build website
+        run: pnpm --filter @soundblart/website build
+
+      - name: Upload website artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-dist
+          path: apps/website/dist/
