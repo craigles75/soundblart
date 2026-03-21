@@ -80,3 +80,4 @@ packages/ui/dist/
 
 # Coverage
 coverage/
+apps/desktop/src-tauri/sounds
