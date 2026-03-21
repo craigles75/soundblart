@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "astro",
   "installCommand": "pnpm install",
   "buildCommand": "pnpm --filter @soundblart/ui build && pnpm --filter @soundblart/website build",
   "outputDirectory": "apps/website/dist"
