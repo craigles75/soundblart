@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Soundblart — Tactile Soundboard for Creators" description="Zero-lag soundboard for meetings, streaming, and podcasting. Native Rust audio engine. Download free for macOS and Windows.">
+  <!-- ─── Hero ────────────────────────────────────────────────── -->
+  <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-20 sm:pt-24 sm:pb-28 text-center">
+    <h1 class="font-display text-display-lg text-on-surface max-w-3xl mx-auto">
+      Your sounds,<br />
+      <span class="text-primary">one tap away.</span>
+    </h1>
+    <p class="font-body text-body-lg text-on-surface-variant mt-6 max-w-xl mx-auto">
+      A tactile soundboard for meetings, streaming, and podcasting.
+      Trigger effects instantly with zero lag — like a real mixing console.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+      <a
+        href="/download"
+        class="font-body text-label-lg px-8 py-3 rounded-chip bg-primary text-primary-on hover:brightness-110 transition-all duration-150 active:scale-[0.97]"
+      >
+        Download for Free
+      </a>
+      <a
+        href="#features"
+        class="font-body text-label-lg px-8 py-3 rounded-chip bg-surface-high text-on-surface hover:bg-surface-highest transition-colors duration-150"
+      >
+        See Features
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── Features ────────────────────────────────────────────── -->
+  <section id="features" class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <h2 class="font-display text-headline-lg text-on-surface text-center mb-12">
+      Built for performance
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-6 rounded-card bg-surface-high shadow-pad-rest hover:bg-surface-highest transition-colors duration-150">
+        <div class="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary" aria-hidden="true" focusable="false">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+        </div>
+        <h3 class="font-display text-title-md text-on-surface mb-2">Sub-50ms Latency</h3>
+        <p class="font-body text-body-md text-on-surface-variant">
+          Native audio engine powered by Rust. Sounds trigger instantly — no perceptible delay between click and playback.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-card bg-surface-high shadow-pad-rest hover:bg-surface-highest transition-colors duration-150">
+        <div class="w-10 h-10 rounded-full bg-secondary/15 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-secondary" aria-hidden="true" focusable="false">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <path d="M8 21h8M12 17v4" />
+          </svg>
+        </div>
+        <h3 class="font-display text-title-md text-on-surface mb-2">Cross-Platform</h3>
+        <p class="font-body text-body-md text-on-surface-variant">
+          Runs natively on macOS and Windows. Same experience, same performance, same design — on both platforms.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-card bg-surface-high shadow-pad-rest hover:bg-surface-highest transition-colors duration-150">
+        <div class="w-10 h-10 rounded-full bg-tertiary/15 flex items-center justify-center mb-4">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-tertiary" aria-hidden="true" focusable="false">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+        </div>
+        <h3 class="font-display text-title-md text-on-surface mb-2">Design-First</h3>
+        <p class="font-body text-body-md text-on-surface-variant">
+          Neon Neumorphic interface — dark, tactile, premium. Sound pads feel like physical buttons on a studio console.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── How It Works ────────────────────────────────────────── -->
+  <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <h2 class="font-display text-headline-lg text-on-surface text-center mb-12">
+      How it works
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <span class="font-display text-display-md text-primary/30 mb-3 block" aria-hidden="true">01</span>
+        <h3 class="font-display text-title-md text-on-surface mb-2">Drop your sounds</h3>
+        <p class="font-body text-body-md text-on-surface-variant">
+          Organize .wav files in folders. Each folder becomes a panel of sound pads.
+        </p>
+      </div>
+      <div>
+        <span class="font-display text-display-md text-primary/30 mb-3 block" aria-hidden="true">02</span>
+        <h3 class="font-display text-title-md text-on-surface mb-2">Open Soundblart</h3>
+        <p class="font-body text-body-md text-on-surface-variant">
+          Your sounds are scanned and pre-loaded instantly. Ready to play on launch.
+        </p>
+      </div>
+      <div>
+        <span class="font-display text-display-md text-primary/30 mb-3 block" aria-hidden="true">03</span>
+        <h3 class="font-display text-title-md text-on-surface mb-2">Tap and trigger</h3>
+        <p class="font-body text-body-md text-on-surface-variant">
+          Click any pad during your meeting, stream, or podcast. Sound plays immediately.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─────────────────────────────────────────────────── -->
+  <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center">
+    <div class="p-10 sm:p-16 rounded-card shadow-pad-rest cta-gradient">
+      <h2 class="font-display text-headline-lg text-on-surface mb-4">
+        Ready to sound off?
+      </h2>
+      <p class="font-body text-body-lg text-on-surface-variant mb-8 max-w-md mx-auto">
+        Download Soundblart for free. No account required. No internet needed.
+      </p>
+      <a
+        href="/download"
+        class="inline-block font-body text-label-lg px-8 py-3 rounded-chip bg-primary text-primary-on hover:brightness-110 transition-all duration-150 active:scale-[0.97]"
+      >
+        Download Now
+      </a>
+    </div>
+  </section>
+</Base>

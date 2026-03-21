@@ -1,0 +1,77 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'A tactile soundboard for meetings, streaming, and podcasting.' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://soundblart.com');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl.href} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:rounded-chip focus:bg-primary focus:text-primary-on font-body text-label-lg">
+      Skip to main content
+    </a>
+    <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
+      <a href="/" class="font-display text-title-md sm:text-title-lg text-primary-fixed hover:text-primary-fixed-dim transition-colors">
+        Soundblart
+      </a>
+      <nav class="flex items-center gap-3 sm:gap-6" aria-label="Main navigation">
+        <a href="/#features" class="hidden sm:block font-body text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">
+          Features
+        </a>
+        <a
+          href="/download"
+          class="font-body text-label-md sm:text-label-lg px-3 sm:px-4 py-1.5 sm:py-2 rounded-chip bg-primary/15 text-primary hover:bg-primary/25 transition-colors"
+        >
+          Download
+        </a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-body text-label-sm text-on-surface-variant">
+        &copy; {new Date().getFullYear()} Soundblart. Built with care.
+      </p>
+      <div class="flex items-center gap-6">
+        <a href="/" class="font-body text-label-sm text-on-surface-variant hover:text-on-surface transition-colors">
+          Home
+        </a>
+        <a href="/download" class="font-body text-label-sm text-on-surface-variant hover:text-on-surface transition-colors">
+          Download
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
