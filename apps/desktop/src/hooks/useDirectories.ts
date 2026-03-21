@@ -1,6 +1,6 @@
 // Phase 5 (T034): Full implementation
 import { useState, useEffect, useCallback } from 'react';
-import { getDirectories, refreshLibrary, type DirectoryInfo, type LibraryStats } from '../lib/ipc';
+import { getDirectories, refreshLibrary, type DirectoryInfo } from '../lib/ipc';
 import { onLibraryUpdated, onDirectoryError } from '../lib/events';
 
 export interface UseDirectoriesReturn {
@@ -9,7 +9,7 @@ export interface UseDirectoriesReturn {
   isRefreshing: boolean;
   error: string | null;
   directoryErrors: Map<string, string>;
-  refresh: () => Promise<LibraryStats | undefined>;
+  refresh: () => Promise<void>;
 }
 
 export function useDirectories(): UseDirectoriesReturn {
@@ -31,15 +31,16 @@ export function useDirectories(): UseDirectoriesReturn {
     }
   }, []);
 
-  const refresh = useCallback(async (): Promise<LibraryStats | undefined> => {
+  const refresh = useCallback(async (): Promise<void> => {
     try {
       setIsRefreshing(true);
-      const stats = await refreshLibrary();
-      setDirectories(stats.directories);
-      return stats;
+      await refreshLibrary();
+      // Re-fetch directories after library refresh
+      const dirs = await getDirectories();
+      setDirectories(dirs);
+      setError(null);
     } catch (err) {
       setError(String(err));
-      return undefined;
     } finally {
       setIsRefreshing(false);
     }
@@ -50,7 +51,7 @@ export function useDirectories(): UseDirectoriesReturn {
 
     const unlisteners: Array<() => void> = [];
 
-    onLibraryUpdated((stats) => setDirectories(stats.directories)).then((fn) => {
+    onLibraryUpdated(() => loadDirectories()).then((fn) => {
       unlisteners.push(fn);
     });
 

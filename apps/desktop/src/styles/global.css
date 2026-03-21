@@ -104,6 +104,22 @@
     border-top: none;
   }
 
+  /* ─── Dropdown animation ────────────────────────────────────────────────────── */
+  .animate-dropdown-in {
+    animation: dropdown-in 120ms ease-out;
+  }
+
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* ─── Sound pad: base neumorphic state (no inline styles for CSP compliance) ── */
   .sound-pad {
     box-shadow:

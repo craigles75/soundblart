@@ -73,7 +73,7 @@ export function AppShell({ activeScreen, onNavigate, children }: AppShellProps) 
       <nav
         className={[
           'flex flex-col bg-surface-low',
-          'transition-all duration-200',
+          'transition-[width] duration-200',
           expanded ? 'w-[220px]' : 'w-[72px]',
         ].join(' ')}
         aria-label="Main navigation"
