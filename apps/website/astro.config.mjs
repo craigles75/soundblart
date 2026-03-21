@@ -8,6 +8,7 @@ export default defineConfig({
     }),
   ],
   output: 'static',
+  outDir: '../../dist',
   build: {
     assets: '_assets',
   },
