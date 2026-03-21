@@ -143,6 +143,23 @@
 
 ---
 
+## Phase 7.5: Pre-Release Blockers
+
+**Purpose**: Issues that must be resolved before the app can be distributed to users.
+
+### macOS Gatekeeper Bypass (Dev/Testing)
+
+- [ ] T059 [devops] Until code signing is in place (T046), document the workaround for unsigned builds: run `xattr -cr /path/to/soundblart.app` to strip the quarantine flag, or launch via `pnpm tauri dev` which bypasses Gatekeeper. Add to README or quickstart.md.
+
+### First Release Build
+
+- [ ] T060 [devops] Merge 001-native-desktop-rewrite branch to main, then tag and push v0.1.0-alpha to trigger the CI release workflow. This will produce the first .dmg (macOS) and .exe (Windows) via tauri-apps/tauri-action and upload them to a GitHub Release. Verify both artifacts are present and downloadable. Note: without code signing (T046/T047), macOS users will need the xattr workaround and Windows users may see SmartScreen warnings.
+- [ ] T061 [web] Update download page links to point to specific release assets (e.g. .dmg and .exe direct download URLs) rather than the generic /releases/latest page, OR verify that /releases/latest correctly resolves to the new Tauri release (not the old Flutter zip files). If old Flutter releases are confusing, delete them from GitHub.
+
+**Checkpoint**: Users can download and run unsigned alpha builds from the website.
+
+---
+
 ## Phase 8: Release Readiness & Distribution
 
 **Purpose**: Everything needed to ship a signed, downloadable release and present a professional public face.
