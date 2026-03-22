@@ -31,22 +31,22 @@ impl ColorCategory {
     /// Matching is case-insensitive. If no keyword matches, returns `Custom`.
     pub fn from_panel_name(name: &str) -> Self {
         let lower = name.to_lowercase();
-        if ["audience", "crowd", "people", "human"]
+        if ["audience", "crowd", "people", "human", "funny", "comedy", "laugh"]
             .iter()
             .any(|kw| lower.contains(kw))
         {
             Self::Audience
-        } else if ["nature", "ambient", "forest", "rain", "outdoor"]
+        } else if ["nature", "ambient", "forest", "rain", "outdoor", "animal", "bird", "water", "weather", "wind"]
             .iter()
             .any(|kw| lower.contains(kw))
         {
             Self::Nature
-        } else if ["traffic", "urban", "city", "transport"]
+        } else if ["traffic", "urban", "city", "transport", "bell", "chime", "alarm", "horn"]
             .iter()
             .any(|kw| lower.contains(kw))
         {
             Self::Traffic
-        } else if ["arcade", "game", "retro", "8bit"]
+        } else if ["arcade", "game", "retro", "8bit", "musical", "music", "instrument"]
             .iter()
             .any(|kw| lower.contains(kw))
         {
